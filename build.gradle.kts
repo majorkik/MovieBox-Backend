@@ -31,13 +31,15 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-json-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-gson:$ktor_version")
     implementation("io.ktor:ktor-client-logging-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
-    implementation("io.ktor:ktor-metrics:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+}
+
+tasks.create("stage") {
+    dependsOn("installDist")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
