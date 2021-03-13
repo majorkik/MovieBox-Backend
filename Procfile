@@ -1,1 +1,1 @@
-web: java -jar ./build/libs/todoserver-1.0.0.jar
+web: ./build/install/moviebox/bin/moviebox
