@@ -11,7 +11,7 @@ import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
-@Suppress("unused") // Referenced in application.conf
+@Suppress("unused")
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation) {
@@ -37,10 +37,11 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
+            call.respondText("Test!", contentType = ContentType.Text.Plain)
+            }
+
+        get("/") {
+            call.respondText("Test!", contentType = ContentType.Text.Plain)
         }
     }
 }
-
-data class MySession(val count: Int = 0)
-

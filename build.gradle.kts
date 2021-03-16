@@ -1,17 +1,10 @@
-import org.jetbrains.kotlin.gradle.dsl.Coroutines
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-val logback_version: String by project
-val ktor_version: String by project
-val kotlin_version: String by project
-
 plugins {
     application
-    kotlin("jvm") version "1.4.30"
+    kotlin("jvm") version Versions.kotlin
 }
 
-group = "com.moviebox.backend"
-version = "0.0.1"
+group = ProjectConfig.group
+version = ProjectConfig.version
 
 application {
     mainClassName = "io.ktor.server.netty.EngineMain"
@@ -25,17 +18,12 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
-    implementation("io.ktor:ktor-server-netty:$ktor_version")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation("io.ktor:ktor-client-core:$ktor_version")
-    implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-auth-jvm:$ktor_version")
-    implementation("io.ktor:ktor-client-logging-jvm:$ktor_version")
-    implementation("io.ktor:ktor-server-core:$ktor_version")
-    implementation("io.ktor:ktor-gson:$ktor_version")
-    implementation("io.ktor:ktor-client-cio:$ktor_version")
-    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    implementation(Libs.Kotlin.kotlinStdLib)
+    implementation(Libs.Log.logback)
+    implementation(Libs.Ktor.core)
+    implementation(Libs.Ktor.netty)
+    implementation(Libs.Ktor.gson)
+    testImplementation(Libs.Ktor.tests)
 }
 
 tasks.create("stage") {
