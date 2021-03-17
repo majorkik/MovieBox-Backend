@@ -7,7 +7,7 @@ group = ProjectConfig.group
 version = ProjectConfig.version
 
 application {
-    mainClassName = "io.ktor.server.netty.EngineMain"
+    mainClass.set("io.ktor.server.netty.EngineMain")
 }
 
 repositories {
@@ -23,7 +23,13 @@ dependencies {
     implementation(Libs.Ktor.core)
     implementation(Libs.Ktor.netty)
     implementation(Libs.Ktor.gson)
+
+    implementation(Libs.Exposed.core)
+    implementation(Libs.Exposed.dao)
+    implementation(Libs.Exposed.jdbc)
+
     testImplementation(Libs.Ktor.tests)
+
 }
 
 tasks.create("stage") {

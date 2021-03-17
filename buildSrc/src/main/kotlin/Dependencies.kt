@@ -16,6 +16,14 @@ object Libs {
         const val tests = "io.ktor:ktor-server-tests:$version"
     }
 
+    object Exposed {
+        private const val version = "0.29.1"
+
+        const val core = "org.jetbrains.exposed:exposed-core:$version"
+        const val dao = "org.jetbrains.exposed:exposed-dao:$version"
+        const val jdbc = "org.jetbrains.exposed:exposed-jdbc:$version"
+    }
+
     object Log {
         const val logback = "ch.qos.logback:logback-classic:1.2.1"
     }
