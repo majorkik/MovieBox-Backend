@@ -13,8 +13,8 @@ application {
 repositories {
     mavenLocal()
     jcenter()
-    maven { url = uri("https://kotlin.bintray.com/ktor") }
-    maven { url = uri("https://kotlin.bintray.com/kotlinx") }
+    maven { setUrl("https://kotlin.bintray.com/ktor") }
+    maven { setUrl("https://kotlin.bintray.com/kotlinx") }
 }
 
 dependencies {
@@ -27,6 +27,11 @@ dependencies {
     implementation(Libs.Exposed.core)
     implementation(Libs.Exposed.dao)
     implementation(Libs.Exposed.jdbc)
+
+    implementation(Libs.Database.hikariCp)
+    implementation(Libs.Database.flywayCore)
+    implementation(Libs.Database.ktorFlyway)
+    implementation(Libs.Database.postgresql)
 
     testImplementation(Libs.Ktor.tests)
 

@@ -24,6 +24,13 @@ object Libs {
         const val jdbc = "org.jetbrains.exposed:exposed-jdbc:$version"
     }
 
+    object Database {
+        const val hikariCp = "com.zaxxer:HikariCP:4.0.2"
+        const val ktorFlyway = "com.viartemev:ktor-flyway-feature:1.2.2"
+        const val flywayCore = "org.flywaydb:flyway-core:7.5.3"
+        const val postgresql = "org.postgresql:postgresql:42.2.19"
+    }
+
     object Log {
         const val logback = "ch.qos.logback:logback-classic:1.2.1"
     }
