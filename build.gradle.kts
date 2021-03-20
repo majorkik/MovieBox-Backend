@@ -23,6 +23,7 @@ dependencies {
     implementation(Libs.Ktor.core)
     implementation(Libs.Ktor.netty)
     implementation(Libs.Ktor.gson)
+    implementation(Libs.Ktor.authJwt)
 
     implementation(Libs.Exposed.core)
     implementation(Libs.Exposed.dao)
@@ -33,8 +34,9 @@ dependencies {
     implementation(Libs.Database.ktorFlyway)
     implementation(Libs.Database.postgresql)
 
-    testImplementation(Libs.Ktor.tests)
+    implementation(Libs.Koin.koin)
 
+    testImplementation(Libs.Ktor.tests)
 }
 
 tasks.create("stage") {

@@ -1,12 +1,18 @@
 package com.moviebox.backend
 
-import com.moviebox.backend.dao.Users
 import com.moviebox.backend.db.DatabaseFactory
-import com.moviebox.backend.models.User
-import com.moviebox.backend.models.UserDataModel
-import com.moviebox.backend.repositories.UsersRepository
+import com.moviebox.backend.di.applicationModule
+import com.moviebox.backend.models.exception.ErrorException
+import com.moviebox.backend.models.exception.ErrorMessage.Companion.EmailAlreadyExists
+import com.moviebox.backend.models.exception.ErrorMessage.Companion.InvalidAuthorizationData
+import com.moviebox.backend.utils.*
+import com.moviebox.backend.web.controllers.UserController
+import com.moviebox.backend.web.test
+import com.moviebox.backend.web.users
 import com.viartemev.ktor.flyway.FlywayFeature
 import io.ktor.application.*
+import io.ktor.auth.*
+import io.ktor.auth.jwt.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.http.*
@@ -16,8 +22,8 @@ import io.ktor.routing.*
 import io.ktor.server.netty.*
 import io.ktor.util.*
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.ktor.ext.Koin
+import org.koin.ktor.ext.inject
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
@@ -26,14 +32,21 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 @Suppress("unused")
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    setupNegotiation()
+    setupKoin()
     setupDatabase()
-    transaction {
-        SchemaUtils.create(Users)
-    }
+    setupNegotiation()
     setupLogging()
     setupCors()
-    setupRoute()
+    setupExceptions()
+
+    val userController: UserController by inject()
+
+    setupAuthentication(userController)
+
+    routing {
+        test()
+        users(userController)
+    }
 }
 
 /**
@@ -55,6 +68,16 @@ private fun Application.setupLogging() {
     install(CallLogging) {
         level = Level.INFO
         filter { call -> call.request.path().startsWith("/") }
+    }
+}
+
+/**
+ * Метод для инициализации Koin
+ */
+
+private fun Application.setupKoin() {
+    install(Koin) {
+        modules(applicationModule)
     }
 }
 
@@ -85,34 +108,30 @@ private fun Application.setupDatabase() {
 }
 
 /**
- * Метод для добавления роутинга
+ * Метод для настройки аутентификации
  */
-private fun Application.setupRoute() {
-    routing {
-        val usersController = UsersRepository()
-        get("/") {
-            val username: String = call.request.queryParameters.getOrFail("username")
-            val password: String = call.request.queryParameters.getOrFail("password")
-            val email: String = call.request.queryParameters.getOrFail("email")
+private fun Application.setupAuthentication(controller: UserController) {
+    install(Authentication) {
+        jwt {
+            verifier(JwtProvider.verifier)
+            authSchemes("Token")
+            validate { credential ->
+                if (credential.payload.audience.contains(JwtProvider.audience)) {
+                    controller.getUserByEmail(credential.payload.claims["email"]?.asString())
+                } else null
+            }
+        }
+    }
+}
 
-            val id = usersController.create(
-                User(
-                    username = username,
-                    password = password,
-                    email = email
-                )
-            )
+private fun Application.setupExceptions() {
+    install(StatusPages) {
+        exception<ErrorException.InvalidAuthorizationData> {
+            call.respond(HttpStatusCode.Unauthorized, InvalidAuthorizationData)
+        }
 
-            call.respond(HttpStatusCode)
-
-            call.respond(
-                UserDataModel(
-                    id = id ?: 0L,
-                    username = username,
-                    password = password,
-                    email = email
-                )
-            )
+        exception<ErrorException.EmailAlreadyExists> {
+            call.respond(HttpStatusCode.Unauthorized, EmailAlreadyExists)
         }
     }
 }

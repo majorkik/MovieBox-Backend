@@ -14,6 +14,7 @@ object Libs {
         const val core = "io.ktor:ktor-server-core:$version"
         const val gson = "io.ktor:ktor-gson:$version"
         const val tests = "io.ktor:ktor-server-tests:$version"
+        const val authJwt = "io.ktor:ktor-auth-jwt:$version"
     }
 
     object Exposed {
@@ -29,6 +30,12 @@ object Libs {
         const val ktorFlyway = "com.viartemev:ktor-flyway-feature:1.2.2"
         const val flywayCore = "org.flywaydb:flyway-core:7.5.3"
         const val postgresql = "org.postgresql:postgresql:42.2.19"
+    }
+
+    object Koin {
+        private const val version = "2.2.2"
+
+        const val koin = "org.koin:koin-ktor:$version"
     }
 
     object Log {
