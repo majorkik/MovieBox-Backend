@@ -2,8 +2,8 @@ package com.moviebox.backend.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import javax.sql.DataSource
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object DatabaseFactory {
 

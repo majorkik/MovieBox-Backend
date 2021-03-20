@@ -4,7 +4,6 @@ import com.moviebox.backend.dao.Users
 import com.moviebox.backend.dao.Users.toDomain
 import com.moviebox.backend.models.User
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.insertIgnoreAndGetId
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.transactions.transaction

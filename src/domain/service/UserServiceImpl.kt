@@ -1,12 +1,11 @@
 package com.moviebox.backend.domain.service
 
-import com.moviebox.backend.models.User
 import com.moviebox.backend.domain.repository.UsersRepository
+import com.moviebox.backend.models.User
 import com.moviebox.backend.models.exception.ErrorException
 import com.moviebox.backend.utils.Cipher
 import com.moviebox.backend.utils.JwtProvider
 import io.ktor.features.*
-import java.lang.NullPointerException
 import java.util.*
 
 class UserServiceImpl(private val jwtProvider: JwtProvider, private val repository: UsersRepository) : UserService {
@@ -18,7 +17,7 @@ class UserServiceImpl(private val jwtProvider: JwtProvider, private val reposito
         if (userInDb != null) throw ErrorException.EmailAlreadyExists
 
         repository.create(user.copy(password = String(base64Encoder.encode(Cipher.encrypt(user.password)))))
-        return user.copy(token = generateJwtToken(user))
+        return user.copy(token = generateJwtToken(user), password = null)
     }
 
     override fun authenticate(user: User): User {
@@ -26,7 +25,7 @@ class UserServiceImpl(private val jwtProvider: JwtProvider, private val reposito
 
         return when {
             userFound == null -> throw ErrorException.UserIsNotFound
-            userFound.password == user.password.encode() -> throw ErrorException.InvalidPassword
+            userFound.password != user.password.encode() -> throw ErrorException.InvalidPassword
             else -> {
                 userFound.copy(token = generateJwtToken(userFound), password = null)
             }

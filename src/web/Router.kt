@@ -17,7 +17,7 @@ fun Routing.users(controller: UserController) {
             controller.register(context)
         }
         post("login") {
-           controller.login(context)
+            controller.login(context)
         }
     }
 }

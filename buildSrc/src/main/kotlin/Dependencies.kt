@@ -1,5 +1,13 @@
 object Versions {
     const val kotlin = "1.4.30"
+
+    const val gradleVersions = "0.36.0"
+    const val ktlint = "9.2.1"
+}
+
+object Plugins {
+    const val ktlint = "org.jlleitschuh.gradle.ktlint"
+    const val gradleVersions = "com.github.ben-manes.versions"
 }
 
 object Libs {

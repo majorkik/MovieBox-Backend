@@ -5,6 +5,8 @@ import com.moviebox.backend.di.applicationModule
 import com.moviebox.backend.models.exception.ErrorException
 import com.moviebox.backend.models.exception.ErrorMessage.Companion.EmailAlreadyExists
 import com.moviebox.backend.models.exception.ErrorMessage.Companion.InvalidAuthorizationData
+import com.moviebox.backend.models.exception.ErrorMessage.Companion.InvalidPassword
+import com.moviebox.backend.models.exception.ErrorMessage.Companion.UserIsNotFound
 import com.moviebox.backend.utils.*
 import com.moviebox.backend.web.controllers.UserController
 import com.moviebox.backend.web.test
@@ -132,6 +134,14 @@ private fun Application.setupExceptions() {
 
         exception<ErrorException.EmailAlreadyExists> {
             call.respond(HttpStatusCode.Unauthorized, EmailAlreadyExists)
+        }
+
+        exception<ErrorException.InvalidPassword> {
+            call.respond(HttpStatusCode.Unauthorized, InvalidPassword)
+        }
+
+        exception<ErrorException.UserIsNotFound> {
+            call.respond(HttpStatusCode.NotFound, UserIsNotFound)
         }
     }
 }
