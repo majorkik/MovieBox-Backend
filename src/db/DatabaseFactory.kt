@@ -7,13 +7,16 @@ import javax.sql.DataSource
 
 object DatabaseFactory {
 
+    /**
+     * Создание инстанса DataSource
+     */
     fun create(): DataSource {
         return hikari()
     }
 
     /**
      * Все настройки находятся в файле resources/hikari.properties
-     * */
+     */
     private fun hikari(): HikariDataSource {
         val config = HikariConfig("/hikari.properties").apply {
             validate()

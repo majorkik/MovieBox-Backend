@@ -1,6 +1,10 @@
 package com.moviebox.backend
 
+import com.moviebox.backend.dao.Users
 import com.moviebox.backend.db.DatabaseFactory
+import com.moviebox.backend.models.User
+import com.moviebox.backend.models.UserDataModel
+import com.moviebox.backend.repositories.UsersRepository
 import com.viartemev.ktor.flyway.FlywayFeature
 import io.ktor.application.*
 import io.ktor.features.*
@@ -12,6 +16,8 @@ import io.ktor.routing.*
 import io.ktor.server.netty.*
 import io.ktor.util.*
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.slf4j.event.Level
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
@@ -22,6 +28,9 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 fun Application.module(testing: Boolean = false) {
     setupNegotiation()
     setupDatabase()
+    transaction {
+        SchemaUtils.create(Users)
+    }
     setupLogging()
     setupCors()
     setupRoute()
@@ -33,6 +42,8 @@ fun Application.module(testing: Boolean = false) {
 private fun Application.setupNegotiation() {
     install(ContentNegotiation) {
         gson {
+            setPrettyPrinting()
+            disableHtmlEscaping()
         }
     }
 }
@@ -78,8 +89,30 @@ private fun Application.setupDatabase() {
  */
 private fun Application.setupRoute() {
     routing {
+        val usersController = UsersRepository()
         get("/") {
-            call.respondText("Test!", contentType = ContentType.Text.Plain)
+            val username: String = call.request.queryParameters.getOrFail("username")
+            val password: String = call.request.queryParameters.getOrFail("password")
+            val email: String = call.request.queryParameters.getOrFail("email")
+
+            val id = usersController.create(
+                User(
+                    username = username,
+                    password = password,
+                    email = email
+                )
+            )
+
+            call.respond(HttpStatusCode)
+
+            call.respond(
+                UserDataModel(
+                    id = id ?: 0L,
+                    username = username,
+                    password = password,
+                    email = email
+                )
+            )
         }
     }
 }
