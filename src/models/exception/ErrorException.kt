@@ -22,23 +22,28 @@ data class ErrorMessage(
 
     companion object {
         val InvalidAuthorizationData = ErrorMessage(
-            statusCode = 2, notLocalizedMessage = "Invalid username and/or password: You did not provide a valid login."
+            statusCode = 2,
+            notLocalizedMessage = "Invalid username and/or password: You did not provide a valid login."
         )
 
         val UsernameAlreadyExists = ErrorMessage(
-            statusCode = 3, notLocalizedMessage = "User with this login already exists."
+            statusCode = 3,
+            notLocalizedMessage = "User with this login already exists."
         )
 
         val EmailAlreadyExists = ErrorMessage(
-            statusCode = 4, notLocalizedMessage = "A user with the same email address already exists."
+            statusCode = 4,
+            notLocalizedMessage = "A user with the same email address already exists."
         )
 
         val InvalidPassword = ErrorMessage(
-            statusCode = 5, notLocalizedMessage = "Invalid password."
+            statusCode = 5,
+            notLocalizedMessage = "Invalid password."
         )
 
         val UserIsNotFound = ErrorMessage(
-            statusCode = 6, notLocalizedMessage = "User is not found."
+            statusCode = 6,
+            notLocalizedMessage = "User is not found."
         )
     }
 }

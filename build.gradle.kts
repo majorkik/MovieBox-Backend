@@ -1,7 +1,13 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
+
 plugins {
     application
     kotlin("jvm") version Versions.kotlin
-    id(Plugins.ktlint) version Versions.ktlint
+    id(Plugins.ktlint) version Versions.ktlintJLLeitschuh
+    id(Plugins.detekt) version Versions.detekt
+    id(Plugins.koin) version Versions.koin
+    id(Plugins.spotless) version Versions.spotless
     id(Plugins.gradleVersions) version Versions.gradleVersions
 }
 
@@ -12,21 +18,81 @@ allprojects {
     repositories {
         mavenLocal()
         jcenter()
-        maven { setUrl("https://kotlin.bintray.com/ktor") }
-        maven { setUrl("https://kotlin.bintray.com/kotlinx") }
+        maven("https://kotlin.bintray.com/ktor")
+        maven("https://kotlin.bintray.com/kotlinx")
+        maven("https://jitpack.io")
     }
 
-    // We want to apply ktlint at all project level because it also checks build gradle files
-    apply(plugin = Plugins.ktlint)
+    apply {
+        plugin(Plugins.koin)
+
+        plugin(Plugins.ktlint)
+        plugin(Plugins.spotless)
+        plugin(Plugins.detekt)
+    }
 
     // Ktlint configuration for sub-projects
     ktlint {
-        version.set("0.40.0")
+        // Version of ktlint cmd tool (Ktlint Gradle plugin is just a wrapper for this tool)
+        version.set(Versions.ktlint)
+        debug.set(true)
         verbose.set(true)
         android.set(true)
+        outputToConsole.set(true)
+        outputColorName.set("BLUE")
+        ignoreFailures.set(true)
+        enableExperimentalRules.set(true)
+
+        // Uncomment below line and run .\gradlew ktlintCheck to see check ktlint experimental rules
+        // enableExperimentalRules.set(true)
 
         reporters {
-            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+            reporter(PLAIN)
+            reporter(CHECKSTYLE)
+        }
+
+        kotlinScriptAdditionalPaths {
+            include(fileTree("scripts/"))
+        }
+        filter {
+            exclude("**/generated/**")
+            include("**/kotlin/**")
+        }
+    }
+
+    spotless {
+        java {
+            target("**/*.java")
+            googleJavaFormat().aosp()
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
+        }
+        kotlin {
+            target("**/*.kt")
+            // ktlint()
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
+        }
+        format("misc") {
+            target("**/*.gradle", "**/*.md", "**/.gitignore")
+            indentWithSpaces()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+
+        kotlinGradle {
+            target("*.gradle.kts")
+            ktlint()
+        }
+
+        format("xml") {
+            target("**/*.xml")
+            indentWithSpaces()
+            trimTrailingWhitespace()
+            endWithNewline()
         }
     }
 }
