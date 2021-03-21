@@ -1,7 +1,6 @@
 package com.moviebox.backend.web
 
 import com.moviebox.backend.web.controllers.UserController
-import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
 

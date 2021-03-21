@@ -2,7 +2,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
 
 plugins {
-    application
+    base
     kotlin("jvm") version Versions.kotlin
     id(Plugins.ktlint) version Versions.ktlintJLLeitschuh
     id(Plugins.detekt) version Versions.detekt
@@ -11,10 +11,10 @@ plugins {
     id(Plugins.gradleVersions) version Versions.gradleVersions
 }
 
-group = ProjectConfig.group
-version = ProjectConfig.version
-
 allprojects {
+    group = ProjectConfig.group
+    version = ProjectConfig.version
+
     repositories {
         mavenLocal()
         jcenter()
@@ -24,6 +24,8 @@ allprojects {
     }
 
     apply {
+        plugin("kotlin")
+
         plugin(Plugins.koin)
 
         plugin(Plugins.ktlint)
@@ -95,43 +97,26 @@ allprojects {
             endWithNewline()
         }
     }
-}
 
-application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
-}
+    detekt {
+        config = files("$rootDir/detekt.yml")
 
-dependencies {
-    implementation(Libs.Kotlin.kotlinStdLib)
-    implementation(Libs.Log.logback)
-    implementation(Libs.Ktor.core)
-    implementation(Libs.Ktor.netty)
-    implementation(Libs.Ktor.gson)
-    implementation(Libs.Ktor.authJwt)
+        parallel = true
 
-    implementation(Libs.Exposed.core)
-    implementation(Libs.Exposed.dao)
-    implementation(Libs.Exposed.jdbc)
-
-    implementation(Libs.Database.hikariCp)
-    implementation(Libs.Database.flywayCore)
-    implementation(Libs.Database.ktorFlyway)
-    implementation(Libs.Database.postgresql)
-
-    implementation(Libs.Koin.koin)
-
-    testImplementation(Libs.Ktor.tests)
+        // By default detekt does not check test source set and gradle specific files, so hey have to be added manually
+        input = files(
+            "$rootDir/buildSrc",
+            "$rootDir/build.gradle.kts",
+            "$rootDir/settings.gradle.kts",
+            "src/main/kotlin",
+            "src/test/kotlin"
+        )
+    }
 }
 
 tasks.create("stage") {
     dependsOn("installDist")
 }
-
-kotlin.sourceSets["main"].kotlin.srcDirs("src")
-kotlin.sourceSets["test"].kotlin.srcDirs("test")
-
-sourceSets["main"].resources.srcDirs("resources")
-sourceSets["test"].resources.srcDirs("testresources")
 
 tasks {
     // Gradle versions plugin configuration
