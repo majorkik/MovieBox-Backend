@@ -1,4 +1,4 @@
-package com.moviebox.backend.module
+package com.moviebox.backend.module.test
 
 import io.ktor.response.*
 import io.ktor.routing.*

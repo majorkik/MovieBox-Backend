@@ -2,7 +2,7 @@ package com.moviebox.backend
 
 import com.moviebox.backend.data.database.DatabaseFactory
 import com.moviebox.backend.domain.encrypt.JwtProvider
-import com.moviebox.backend.module.test
+import com.moviebox.backend.module.test.test
 import com.moviebox.backend.data.dataModule
 import com.moviebox.backend.domain.domainModule
 import com.moviebox.backend.module.applicationModule
