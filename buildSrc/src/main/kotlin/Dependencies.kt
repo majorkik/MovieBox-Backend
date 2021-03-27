@@ -57,7 +57,7 @@ object Libs {
     }
 
     object Koin {
-        const val koin = "org.koin:koin-ktor:${Versions.koin}"
+        const val koinLib = "org.koin:koin-ktor:${Versions.koin}"
     }
 
     object Log {
