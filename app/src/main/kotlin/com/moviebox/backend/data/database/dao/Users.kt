@@ -1,6 +1,6 @@
-package com.moviebox.backend.dao
+package com.moviebox.backend.data.database.dao
 
-import com.moviebox.backend.models.User
+import com.moviebox.backend.domain.model.User
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.ResultRow
 
@@ -12,7 +12,7 @@ object Users : LongIdTable("users") {
     val quot = varchar("quot", 500).nullable()
 
     fun ResultRow.toDomain() = User(
-        id = this[Users.id].value,
+        id = this[id].value,
         username = this[username],
         email = this[email],
         password = this[password],

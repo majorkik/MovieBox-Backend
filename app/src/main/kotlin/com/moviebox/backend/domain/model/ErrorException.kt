@@ -1,4 +1,4 @@
-package com.moviebox.backend.models.exception
+package com.moviebox.backend.domain.model
 
 import com.google.gson.annotations.SerializedName
 

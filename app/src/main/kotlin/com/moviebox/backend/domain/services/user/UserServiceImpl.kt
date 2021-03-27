@@ -1,14 +1,14 @@
-package com.moviebox.backend.domain.service
+package com.moviebox.backend.domain.services.user
 
-import com.moviebox.backend.domain.repository.UsersRepository
-import com.moviebox.backend.models.User
-import com.moviebox.backend.models.exception.ErrorException
-import com.moviebox.backend.utils.Cipher
-import com.moviebox.backend.utils.JwtProvider
-import io.ktor.features.*
-import java.util.*
+import com.moviebox.backend.domain.encrypt.Cipher
+import com.moviebox.backend.domain.encrypt.JwtProvider
+import com.moviebox.backend.domain.model.ErrorException
+import com.moviebox.backend.domain.model.User
+import com.moviebox.backend.domain.repository.UserRepository
+import io.ktor.features.NotFoundException
+import java.util.Base64
 
-class UserServiceImpl(private val jwtProvider: JwtProvider, private val repository: UsersRepository) : UserService {
+class UserServiceImpl(private val jwtProvider: JwtProvider, private val repository: UserRepository) : UserService {
     private val base64Encoder = Base64.getEncoder()
 
     override fun create(user: User): User {
@@ -38,9 +38,8 @@ class UserServiceImpl(private val jwtProvider: JwtProvider, private val reposito
         return user.copy(token = generateJwtToken(user))
     }
 
-    private fun generateJwtToken(user: User): String {
-        return jwtProvider.createJWT(username = user.username, email = user.email)
-    }
+    private fun generateJwtToken(user: User): String =
+        jwtProvider.createJWT(username = user.username, email = user.email)
 
     private fun String?.encode() = String(base64Encoder.encode(Cipher.encrypt(this)))
 }

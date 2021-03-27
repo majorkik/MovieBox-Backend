@@ -102,7 +102,6 @@ allprojects {
         config = files("$rootDir/detekt.yml")
 
         parallel = true
-
         // By default detekt does not check test source set and gradle specific files, so hey have to be added manually
         input = files(
             "$rootDir/buildSrc",
@@ -111,6 +110,8 @@ allprojects {
             "src/main/kotlin",
             "src/test/kotlin"
         )
+
+        autoCorrect = true
     }
 }
 

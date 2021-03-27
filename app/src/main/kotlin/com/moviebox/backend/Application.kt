@@ -1,38 +1,46 @@
 package com.moviebox.backend
 
-import com.moviebox.backend.db.DatabaseFactory
-import com.moviebox.backend.di.applicationModule
-import com.moviebox.backend.models.exception.ErrorException
-import com.moviebox.backend.models.exception.ErrorMessage.Companion.EmailAlreadyExists
-import com.moviebox.backend.models.exception.ErrorMessage.Companion.InvalidAuthorizationData
-import com.moviebox.backend.models.exception.ErrorMessage.Companion.InvalidPassword
-import com.moviebox.backend.models.exception.ErrorMessage.Companion.UserIsNotFound
-import com.moviebox.backend.utils.*
-import com.moviebox.backend.web.controllers.UserController
-import com.moviebox.backend.web.test
-import com.moviebox.backend.web.users
+import com.moviebox.backend.data.database.DatabaseFactory
+import com.moviebox.backend.domain.encrypt.JwtProvider
+import com.moviebox.backend.module.test
+import com.moviebox.backend.data.dataModule
+import com.moviebox.backend.domain.domainModule
+import com.moviebox.backend.module.applicationModule
+import com.moviebox.backend.domain.model.ErrorException
+import com.moviebox.backend.domain.model.ErrorMessage.Companion.EmailAlreadyExists
+import com.moviebox.backend.domain.model.ErrorMessage.Companion.InvalidAuthorizationData
+import com.moviebox.backend.domain.model.ErrorMessage.Companion.InvalidPassword
+import com.moviebox.backend.domain.model.ErrorMessage.Companion.UserIsNotFound
+import com.moviebox.backend.module.user.UserController
+import com.moviebox.backend.module.user.users
 import com.viartemev.ktor.flyway.FlywayFeature
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.auth.jwt.*
-import io.ktor.features.*
-import io.ktor.gson.*
-import io.ktor.http.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.server.netty.*
-import io.ktor.util.*
+import io.ktor.application.Application
+import io.ktor.application.install
+import io.ktor.application.call
+import io.ktor.auth.Authentication
+import io.ktor.auth.jwt.jwt
+import io.ktor.features.ContentNegotiation
+import io.ktor.features.CallLogging
+import io.ktor.features.CORS
+import io.ktor.features.StatusPages
+import io.ktor.gson.gson
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.HttpMethod
+import io.ktor.request.path
+import io.ktor.response.respond
+import io.ktor.routing.routing
+import io.ktor.server.netty.EngineMain
+import io.ktor.util.KtorExperimentalAPI
 import org.jetbrains.exposed.sql.Database
 import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
 import org.slf4j.event.Level
 
-fun main(args: Array<String>): Unit = EngineMain.main(args)
+fun main(args: Array<String>) = EngineMain.main(args)
 
 @KtorExperimentalAPI
 @Suppress("unused")
-@kotlin.jvm.JvmOverloads
+@JvmOverloads
 fun Application.module(testing: Boolean = false) {
     setupKoin()
     setupDatabase()
@@ -41,13 +49,11 @@ fun Application.module(testing: Boolean = false) {
     setupCors()
     setupExceptions()
 
-    val userController: UserController by inject()
-
-    setupAuthentication(userController)
+    setupAuthentication()
 
     routing {
         test()
-        users(userController)
+        users()
     }
 }
 
@@ -79,7 +85,7 @@ private fun Application.setupLogging() {
 
 private fun Application.setupKoin() {
     install(Koin) {
-        modules(applicationModule)
+        modules(applicationModule, dataModule, domainModule)
     }
 }
 
@@ -112,7 +118,9 @@ private fun Application.setupDatabase() {
 /**
  * Метод для настройки аутентификации
  */
-private fun Application.setupAuthentication(controller: UserController) {
+private fun Application.setupAuthentication() {
+    val controller: UserController by inject()
+
     install(Authentication) {
         jwt {
             verifier(JwtProvider.verifier)

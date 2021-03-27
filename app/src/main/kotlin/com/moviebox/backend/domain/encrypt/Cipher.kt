@@ -1,4 +1,4 @@
-package com.moviebox.backend.utils
+package com.moviebox.backend.domain.encrypt
 
 import com.auth0.jwt.algorithms.Algorithm
 

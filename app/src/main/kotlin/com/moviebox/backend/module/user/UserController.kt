@@ -1,12 +1,12 @@
-package com.moviebox.backend.web.controllers
+package com.moviebox.backend.module.user
 
-import com.moviebox.backend.domain.service.UserService
-import com.moviebox.backend.models.User
-import com.moviebox.backend.models.isValidLogin
-import com.moviebox.backend.models.isValidRegister
-import io.ktor.application.*
-import io.ktor.request.*
-import io.ktor.response.*
+import com.moviebox.backend.domain.model.User
+import com.moviebox.backend.domain.model.isValidLogin
+import com.moviebox.backend.domain.model.isValidRegister
+import com.moviebox.backend.domain.services.user.UserService
+import io.ktor.application.ApplicationCall
+import io.ktor.request.receiveOrNull
+import io.ktor.response.respond
 
 class UserController(private val service: UserService) {
 

@@ -1,8 +1,7 @@
-package com.moviebox.backend.models
+package com.moviebox.backend.domain.model
 
-import com.moviebox.backend.extensions.isEmailValid
-import com.moviebox.backend.models.exception.ErrorException
-import io.ktor.auth.*
+import com.moviebox.backend.domain.extension.isEmailValid
+import io.ktor.auth.Principal
 
 data class User(
     val id: Long? = null,

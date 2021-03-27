@@ -1,4 +1,4 @@
-package com.moviebox.backend.db
+package com.moviebox.backend.data.database
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -10,9 +10,7 @@ object DatabaseFactory {
     /**
      * Создание инстанса DataSource
      */
-    fun create(): DataSource {
-        return hikari()
-    }
+    fun create(): DataSource = hikari()
 
     /**
      * Все настройки находятся в файле resources/hikari.properties

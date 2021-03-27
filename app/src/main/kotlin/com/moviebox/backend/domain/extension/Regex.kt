@@ -1,4 +1,4 @@
-package com.moviebox.backend.extensions
+package com.moviebox.backend.domain.extension
 
 const val MAIL_REGEX = (
     "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@" +
