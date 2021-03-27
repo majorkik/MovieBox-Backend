@@ -24,7 +24,7 @@ dependencies {
     implementation(Libs.Database.ktorFlyway)
     implementation(Libs.Database.postgresql)
 
-    implementation(Libs.Koin.koin)
+    implementation(Libs.Koin.koinLib)
 
     testImplementation(Libs.Ktor.tests)
 }

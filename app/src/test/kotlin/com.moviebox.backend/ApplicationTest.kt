@@ -1,7 +1,9 @@
 package com.moviebox.backend
 
-import io.ktor.http.*
-import io.ktor.server.testing.*
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import io.ktor.server.testing.withTestApplication
+import io.ktor.server.testing.handleRequest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

@@ -21,6 +21,7 @@ fun User?.isValidLogin(): User {
     throw ErrorException.InvalidAuthorizationData
 }
 
+@Suppress("ComplexCondition")
 fun User?.isValidRegister(): User {
     if (this != null && username.isNotBlank() && !password.isNullOrBlank() && email.isEmailValid()) {
         return this
