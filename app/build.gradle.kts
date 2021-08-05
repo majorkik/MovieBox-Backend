@@ -8,23 +8,23 @@ plugins {
 }
 
 dependencies {
-    implementation(Libs.Kotlin.kotlinStdLib)
-    implementation(Libs.Log.logback)
-    implementation(Libs.Ktor.core)
-    implementation(Libs.Ktor.netty)
-    implementation(Libs.Ktor.gson)
-    implementation(Libs.Ktor.authJwt)
+    implementation(Lib.Kotlin.kotlinStdLib)
+    implementation(Lib.Log.logback)
+    implementation(Lib.Ktor.core)
+    implementation(Lib.Ktor.netty)
+    implementation(Lib.Ktor.gson)
+    implementation(Lib.Ktor.authJwt)
 
-    implementation(Libs.Exposed.core)
-    implementation(Libs.Exposed.dao)
-    implementation(Libs.Exposed.jdbc)
+    implementation(Lib.Exposed.core)
+    implementation(Lib.Exposed.dao)
+    implementation(Lib.Exposed.jdbc)
 
-    implementation(Libs.Database.hikariCp)
-    implementation(Libs.Database.flywayCore)
-    implementation(Libs.Database.ktorFlyway)
-    implementation(Libs.Database.postgresql)
+    implementation(Lib.Database.hikariCp)
+    implementation(Lib.Database.flywayCore)
+    implementation(Lib.Database.ktorFlyway)
+    implementation(Lib.Database.postgresql)
 
-    implementation(Libs.Koin.koinLib)
+    implementation(Lib.Koin.koinLib)
 
-    testImplementation(Libs.Ktor.tests)
+    testImplementation(Lib.Ktor.tests)
 }

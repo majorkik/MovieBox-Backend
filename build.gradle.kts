@@ -3,12 +3,12 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN
 
 plugins {
     base
-    kotlin("jvm") version Versions.kotlin
-    id(Plugins.ktlint) version Versions.ktlintJLLeitschuh
-    id(Plugins.detekt) version Versions.detekt
-    id(Plugins.koin) version Versions.koin
-    id(Plugins.spotless) version Versions.spotless
-    id(Plugins.gradleVersions) version Versions.gradleVersions
+    kotlin("jvm") version Version.kotlin
+    id(Plugin.ktlint) version Version.ktlintJLLeitschuh
+    id(Plugin.detekt) version Version.detekt
+    id(Plugin.koin) version Version.koin
+    id(Plugin.spotless) version Version.spotless
+    id(Plugin.gradleVersions) version Version.gradleVersions
 }
 
 allprojects {
@@ -26,17 +26,17 @@ allprojects {
     apply {
         plugin("kotlin")
 
-        plugin(Plugins.koin)
+        plugin(Plugin.koin)
 
-        plugin(Plugins.ktlint)
-        plugin(Plugins.spotless)
-        plugin(Plugins.detekt)
+        plugin(Plugin.ktlint)
+        plugin(Plugin.spotless)
+        plugin(Plugin.detekt)
     }
 
     // Ktlint configuration for sub-projects
     ktlint {
         // Version of ktlint cmd tool (Ktlint Gradle plugin is just a wrapper for this tool)
-        version.set(Versions.ktlint)
+        version.set(Version.ktlint)
         debug.set(true)
         verbose.set(true)
         android.set(true)

@@ -1,6 +1,6 @@
 # MovieBox Backend (Ktor) [ [Android Application](https://github.com/majorkik/moviebox_compose) ]
 
-#### [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.30-brightgreen)](https://kotlinlang.org) [![Ktor version](https://img.shields.io/badge/Ktor-1.5.2-red)](https://ktor.io) [![Gradle](https://img.shields.io/badge/Gradle-6.8.2-blue)](https://gradle.org) [![CodeFactor](https://www.codefactor.io/repository/github/majorkik/moviebox-backend/badge)](https://www.codefactor.io/repository/github/majorkik/moviebox-backend)
+#### [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.21-brightgreen)](https://kotlinlang.org) [![Ktor version](https://img.shields.io/badge/Ktor-1.6.2-red)](https://ktor.io) [![Gradle](https://img.shields.io/badge/Gradle-7.1.1-blue)](https://gradle.org) [![CodeFactor](https://www.codefactor.io/repository/github/majorkik/moviebox-backend/badge)](https://www.codefactor.io/repository/github/majorkik/moviebox-backend)
 
 
 

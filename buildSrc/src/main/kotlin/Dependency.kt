@@ -1,19 +1,19 @@
-object Versions {
+object Version {
     // Kotlin
-    const val kotlin = "1.4.31"
+    const val kotlin = "1.5.21"
 
     // Versions
-    const val gradleVersions = "0.38.0"
+    const val gradleVersions = "0.39.0"
 
     // Static analysis tools
-    const val spotless = "5.11.0"
-    const val ktlintJLLeitschuh = "10.0.0"
-    const val ktlint = "0.41.0"
-    const val detekt = "1.16.0"
+    const val spotless = "5.14.2"
+    const val ktlintJLLeitschuh = "10.1.0"
+    const val ktlint = "0.42.0"
+    const val detekt = "1.17.1"
     const val koin = "2.2.2"
 }
 
-object Plugins {
+object Plugin {
     // Updates versions
     const val gradleVersions = "com.github.ben-manes.versions"
 
@@ -26,13 +26,13 @@ object Plugins {
     const val koin = "koin"
 }
 
-object Libs {
+object Lib {
     object Kotlin {
-        const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
+        const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Version.kotlin}"
     }
 
     object Ktor {
-        private const val version = "1.5.2"
+        private const val version = "1.6.2"
 
         const val netty = "io.ktor:ktor-server-netty:$version"
         const val core = "io.ktor:ktor-server-core:$version"
@@ -42,7 +42,7 @@ object Libs {
     }
 
     object Exposed {
-        private const val version = "0.29.1"
+        private const val version = "0.32.1"
 
         const val core = "org.jetbrains.exposed:exposed-core:$version"
         const val dao = "org.jetbrains.exposed:exposed-dao:$version"
@@ -50,17 +50,17 @@ object Libs {
     }
 
     object Database {
-        const val hikariCp = "com.zaxxer:HikariCP:4.0.3"
-        const val ktorFlyway = "com.viartemev:ktor-flyway-feature:1.2.2"
-        const val flywayCore = "org.flywaydb:flyway-core:7.7.0"
-        const val postgresql = "org.postgresql:postgresql:42.2.19"
+        const val hikariCp = "com.zaxxer:HikariCP:5.0.0"
+        const val ktorFlyway = "com.viartemev:ktor-flyway-feature:1.3.0"
+        const val flywayCore = "org.flywaydb:flyway-core:7.12.1"
+        const val postgresql = "org.postgresql:postgresql:42.2.23"
     }
 
     object Koin {
-        const val koinLib = "org.koin:koin-ktor:${Versions.koin}"
+        const val koinLib = "org.koin:koin-ktor:${Version.koin}"
     }
 
     object Log {
-        const val logback = "ch.qos.logback:logback-classic:1.2.3"
+        const val logback = "ch.qos.logback:logback-classic:1.2.5"
     }
 }
