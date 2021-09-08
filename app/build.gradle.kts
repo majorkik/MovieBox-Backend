@@ -26,5 +26,7 @@ dependencies {
 
     implementation(Lib.Koin.koinLib)
 
+    implementation(Lib.Other.bcrypt)
+
     testImplementation(Lib.Ktor.tests)
 }

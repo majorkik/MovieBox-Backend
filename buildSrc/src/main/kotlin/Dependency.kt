@@ -63,4 +63,8 @@ object Lib {
     object Log {
         const val logback = "ch.qos.logback:logback-classic:1.2.5"
     }
+
+    object Other {
+        const val bcrypt = "at.favre.lib:bcrypt:0.9.0"
+    }
 }

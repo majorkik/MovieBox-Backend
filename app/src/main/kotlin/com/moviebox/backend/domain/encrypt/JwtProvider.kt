@@ -2,10 +2,13 @@ package com.moviebox.backend.domain.encrypt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
+import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
 import java.util.Date
 
 object JwtProvider {
+    private val algorithm = Algorithm.HMAC256("secret-key")
+
     private const val validityInMs = 36_000_00 * 168 // 1 week
     const val issuer = "ktor-realworld"
     const val audience = "ktor-audience"
@@ -16,11 +19,11 @@ object JwtProvider {
     private const val claim_username = "username"
 
     val verifier: JWTVerifier = JWT
-        .require(Cipher.algorithm)
+        .require(algorithm)
         .withIssuer(issuer)
         .build()
 
-    fun decodeJWT(token: String): DecodedJWT = JWT.require(Cipher.algorithm).build().verify(token)
+    fun decodeJWT(token: String): DecodedJWT = JWT.require(algorithm).build().verify(token)
 
     fun createJWT(username: String, email: String): String = JWT.create()
         .withIssuedAt(Date())
@@ -29,5 +32,5 @@ object JwtProvider {
         .withAudience(audience)
         .withClaim(claim_email, email)
         .withClaim(claim_username, username)
-        .withExpiresAt(Date(System.currentTimeMillis() + validityInMs)).sign(Cipher.algorithm)
+        .withExpiresAt(Date(System.currentTimeMillis() + validityInMs)).sign(algorithm)
 }

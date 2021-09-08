@@ -1,6 +1,6 @@
 package com.moviebox.backend.domain.services.user
 
-import com.moviebox.backend.domain.encrypt.Cipher
+import com.moviebox.backend.domain.encrypt.BCrypt
 import com.moviebox.backend.domain.encrypt.JwtProvider
 import com.moviebox.backend.domain.model.ErrorException
 import com.moviebox.backend.domain.model.User
@@ -16,7 +16,7 @@ class UserServiceImpl(private val jwtProvider: JwtProvider, private val reposito
 
         if (userInDb != null) throw ErrorException.EmailAlreadyExists
 
-        repository.create(user.copy(password = String(base64Encoder.encode(Cipher.encrypt(user.password)))))
+        repository.create(user.copy(password = BCrypt.encrypt(user.password!!)))
         return user.copy(token = generateJwtToken(user), password = null)
     }
 
@@ -25,7 +25,8 @@ class UserServiceImpl(private val jwtProvider: JwtProvider, private val reposito
 
         return when {
             userFound == null -> throw ErrorException.UserIsNotFound
-            userFound.password != user.password.encode() -> throw ErrorException.InvalidPassword
+            userFound.password == null -> throw ErrorException.UserIsNotFound
+            BCrypt.verify(user.password!!, userFound.password) -> throw ErrorException.InvalidPassword
             else -> {
                 userFound.copy(token = generateJwtToken(userFound), password = null)
             }
@@ -40,6 +41,4 @@ class UserServiceImpl(private val jwtProvider: JwtProvider, private val reposito
 
     private fun generateJwtToken(user: User): String =
         jwtProvider.createJWT(username = user.username, email = user.email)
-
-    private fun String?.encode() = String(base64Encoder.encode(Cipher.encrypt(this)))
 }
