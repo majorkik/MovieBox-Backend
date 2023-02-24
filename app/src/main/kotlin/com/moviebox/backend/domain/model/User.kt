@@ -1,7 +1,7 @@
 package com.moviebox.backend.domain.model
 
 import com.moviebox.backend.domain.extension.isEmailValid
-import io.ktor.auth.Principal
+import io.ktor.server.auth.*
 
 data class User(
     val id: Long? = null,

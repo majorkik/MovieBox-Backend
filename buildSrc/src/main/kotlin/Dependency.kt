@@ -1,16 +1,16 @@
 object Version {
     // Kotlin
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.8.10"
 
     // Versions
-    const val gradleVersions = "0.39.0"
+    const val gradleVersions = "0.46.0"
 
     // Static analysis tools
-    const val spotless = "5.14.2"
-    const val ktlintJLLeitschuh = "10.1.0"
-    const val ktlint = "0.42.0"
-    const val detekt = "1.17.1"
-    const val koin = "2.2.2"
+    const val spotless = "6.15.0"
+    const val ktlintJLLeitschuh = "11.2.0"
+    const val ktlint = "0.48.2"
+    const val detekt = "1.22.0"
+    const val koin = "3.3.1"
 }
 
 object Plugin {
@@ -32,17 +32,23 @@ object Lib {
     }
 
     object Ktor {
-        private const val version = "1.6.2"
+        private const val version = "2.2.3"
 
-        const val netty = "io.ktor:ktor-server-netty:$version"
-        const val core = "io.ktor:ktor-server-core:$version"
-        const val gson = "io.ktor:ktor-gson:$version"
-        const val tests = "io.ktor:ktor-server-tests:$version"
-        const val authJwt = "io.ktor:ktor-auth-jwt:$version"
+        const val netty = "io.ktor:ktor-server-netty-jvm:$version"
+        const val core = "io.ktor:ktor-server-core-jvm:$version"
+        const val statusPages = "io.ktor:ktor-server-status-pages-jvm:$version"
+        const val headersJvm = "io.ktor:ktor-server-default-headers-jvm:$version"
+        const val contentNegotiation = "io.ktor:ktor-server-content-negotiation:$version"
+        const val serialization = "io.ktor:ktor-serialization-kotlinx-json:$version"
+        const val cors = "io.ktor:ktor-server-cors:$version"
+        const val logging = "io.ktor:ktor-server-call-logging:$version"
+        const val serverSessions = "io.ktor:ktor-server-sessions:$version"
+        const val auth = "io.ktor:ktor-server-auth:$version"
+        const val authJwt = "io.ktor:ktor-server-auth-jwt:$version"
     }
 
     object Exposed {
-        private const val version = "0.32.1"
+        private const val version = "0.41.1"
 
         const val core = "org.jetbrains.exposed:exposed-core:$version"
         const val dao = "org.jetbrains.exposed:exposed-dao:$version"
@@ -50,21 +56,21 @@ object Lib {
     }
 
     object Database {
-        const val hikariCp = "com.zaxxer:HikariCP:5.0.0"
+        const val hikariCp = "com.zaxxer:HikariCP:5.0.1"
         const val ktorFlyway = "com.viartemev:ktor-flyway-feature:1.3.0"
-        const val flywayCore = "org.flywaydb:flyway-core:7.12.1"
-        const val postgresql = "org.postgresql:postgresql:42.2.23"
+        const val flywayCore = "org.flywaydb:flyway-core:9.15.1"
+        const val postgresql = "org.postgresql:postgresql:42.5.4"
     }
 
     object Koin {
-        const val koinLib = "org.koin:koin-ktor:${Version.koin}"
+        const val koinLib = "io.insert-koin:koin-ktor:${Version.koin}"
     }
 
     object Log {
-        const val logback = "ch.qos.logback:logback-classic:1.2.5"
+        const val logback = "ch.qos.logback:logback-classic:1.4.5"
     }
 
     object Other {
-        const val bcrypt = "at.favre.lib:bcrypt:0.9.0"
+        const val bcrypt = "at.favre.lib:bcrypt:0.10.2"
     }
 }

@@ -11,19 +11,19 @@ class ApplicationTest {
     @Test
     fun testRoot() {
         withTestApplication({ module(testing = true) }) {
-        handleRequest(HttpMethod.Get, "/") {}.apply {
-            assertEquals(HttpStatusCode.OK, response.status())
-            assertEquals("Test", response.content)
+            handleRequest(HttpMethod.Get, "/") {}.apply {
+                assertEquals(HttpStatusCode.OK, response.status())
+                assertEquals("Test", response.content)
+            }
         }
-    }
     }
 
     @Test
     fun testRegister() {
         withTestApplication({ module(testing = true) }) {
-        handleRequest(HttpMethod.Post, "/users") {}.apply {
-            assertEquals(HttpStatusCode.Unauthorized, response.status())
+            handleRequest(HttpMethod.Post, "/users") {}.apply {
+                assertEquals(HttpStatusCode.Unauthorized, response.status())
+            }
         }
-    }
     }
 }

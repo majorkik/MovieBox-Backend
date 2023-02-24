@@ -9,10 +9,16 @@ plugins {
 
 dependencies {
     implementation(Lib.Kotlin.kotlinStdLib)
-    implementation(Lib.Log.logback)
     implementation(Lib.Ktor.core)
     implementation(Lib.Ktor.netty)
-    implementation(Lib.Ktor.gson)
+    implementation(Lib.Ktor.statusPages)
+    implementation(Lib.Ktor.headersJvm)
+    implementation(Lib.Ktor.contentNegotiation)
+    implementation(Lib.Ktor.serialization)
+    implementation(Lib.Ktor.cors)
+    implementation(Lib.Ktor.logging)
+    implementation(Lib.Ktor.serverSessions)
+    implementation(Lib.Ktor.auth)
     implementation(Lib.Ktor.authJwt)
 
     implementation(Lib.Exposed.core)
@@ -28,5 +34,5 @@ dependencies {
 
     implementation(Lib.Other.bcrypt)
 
-    testImplementation(Lib.Ktor.tests)
+    testImplementation(Lib.Ktor.core)
 }

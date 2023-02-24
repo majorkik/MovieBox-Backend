@@ -1,8 +1,6 @@
 package com.moviebox.backend.module.user
 
-import io.ktor.routing.Routing
-import io.ktor.routing.route
-import io.ktor.routing.post
+import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Routing.users() {

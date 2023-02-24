@@ -1,8 +1,7 @@
 package com.moviebox.backend.module.test
 
-import io.ktor.routing.Routing
-import io.ktor.routing.get
-import io.ktor.response.respondText
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 fun Routing.test() {
     get("/") {

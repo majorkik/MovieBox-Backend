@@ -5,8 +5,8 @@ import com.moviebox.backend.domain.encrypt.JwtProvider
 import com.moviebox.backend.domain.model.ErrorException
 import com.moviebox.backend.domain.model.User
 import com.moviebox.backend.domain.repository.UserRepository
-import io.ktor.features.NotFoundException
-import java.util.Base64
+import io.ktor.server.plugins.*
+import java.util.*
 
 class UserServiceImpl(private val jwtProvider: JwtProvider, private val repository: UserRepository) : UserService {
     private val base64Encoder = Base64.getEncoder()

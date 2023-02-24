@@ -47,7 +47,7 @@ WHETHER IN AN ACTION OF  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTIO
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-[badge-kotlin]: https://img.shields.io/badge/Kotlin-1.5.21-brightgreen?style=flat-square&logo=appveyor "Kotlin Version"
+[badge-kotlin]: https://img.shields.io/badge/Kotlin-1.8.10-brightgreen?style=flat-square&logo=appveyor "Kotlin Version"
 
 [badge-ktor]: https://img.shields.io/badge/Ktor-1.6.2-red?style=flat-square&logo=appveyor "Ktor"
 

@@ -6,7 +6,6 @@ plugins {
     kotlin("jvm") version Version.kotlin
     id(Plugin.ktlint) version Version.ktlintJLLeitschuh
     id(Plugin.detekt) version Version.detekt
-    id(Plugin.koin) version Version.koin
     id(Plugin.spotless) version Version.spotless
     id(Plugin.gradleVersions) version Version.gradleVersions
 }
@@ -16,8 +15,9 @@ allprojects {
     version = ProjectConfig.version
 
     repositories {
-        mavenLocal()
-        jcenter()
+        google()
+        mavenCentral()
+        gradlePluginPortal()
         maven("https://kotlin.bintray.com/ktor")
         maven("https://kotlin.bintray.com/kotlinx")
         maven("https://jitpack.io")
@@ -25,8 +25,6 @@ allprojects {
 
     apply {
         plugin("kotlin")
-
-        plugin(Plugin.koin)
 
         plugin(Plugin.ktlint)
         plugin(Plugin.spotless)
@@ -63,14 +61,6 @@ allprojects {
     }
 
     spotless {
-        java {
-            target("**/*.java")
-            googleJavaFormat().aosp()
-            removeUnusedImports()
-            trimTrailingWhitespace()
-            indentWithSpaces()
-            endWithNewline()
-        }
         kotlin {
             target("**/*.kt")
             // ktlint()
@@ -117,29 +107,4 @@ allprojects {
 
 tasks.create("stage") {
     dependsOn("installDist")
-}
-
-tasks {
-    // Gradle versions plugin configuration
-    "dependencyUpdates"(com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask::class) {
-        resolutionStrategy {
-            componentSelection {
-                all {
-                    // Do not show pre-release version of library in generated dependency report
-                    val rejected = listOf("alpha", "beta", "rc", "cr", "m", "preview")
-                        .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
-                        .any { it.matches(candidate.version) }
-                    if (rejected) {
-                        reject("Release candidate")
-                    }
-
-                    // kAndroid newest version is 0.8.8 (jcenter), however maven repository contains version 0.8.7 and
-                    // plugin fails to recognize it correctly
-                    if (candidate.group == "com.pawegio.kandroid") {
-                        reject("version ${candidate.version} is broken for ${candidate.group}'")
-                    }
-                }
-            }
-        }
-    }
 }

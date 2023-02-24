@@ -1,6 +1,6 @@
 package com.moviebox.backend.domain.model
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
 
 sealed class ErrorException : Exception() {
     object InvalidAuthorizationData : ErrorException()
@@ -11,7 +11,7 @@ sealed class ErrorException : Exception() {
 }
 
 data class ErrorMessage(
-    @SerializedName("status_code") val statusCode: Int,
+    @SerialName("status_code") val statusCode: Int,
     val notLocalizedMessage: String
 ) {
     override fun toString(): String = "$statusCode $notLocalizedMessage"

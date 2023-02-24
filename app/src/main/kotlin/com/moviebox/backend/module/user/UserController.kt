@@ -4,9 +4,9 @@ import com.moviebox.backend.domain.model.User
 import com.moviebox.backend.domain.model.isValidLogin
 import com.moviebox.backend.domain.model.isValidRegister
 import com.moviebox.backend.domain.services.user.UserService
-import io.ktor.application.ApplicationCall
-import io.ktor.request.receiveOrNull
-import io.ktor.response.respond
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
 
 class UserController(private val service: UserService) {
 
