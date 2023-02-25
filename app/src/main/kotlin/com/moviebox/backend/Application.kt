@@ -53,9 +53,6 @@ fun Application.module(testing: Boolean = false) {
     }
 }
 
-/**
- * Метод для инициализации сериализации
- */
 private fun Application.setupNegotiation() {
     install(ContentNegotiation) {
         json(
@@ -67,9 +64,6 @@ private fun Application.setupNegotiation() {
     }
 }
 
-/**
- * Метод для инициализации логирования
- */
 private fun Application.setupLogging() {
     install(CallLogging) {
         level = Level.INFO
@@ -77,19 +71,12 @@ private fun Application.setupLogging() {
     }
 }
 
-/**
- * Метод для инициализации Koin
- */
-
 private fun Application.setupKoin() {
     install(Koin) {
         modules(applicationModule, dataModule, domainModule)
     }
 }
 
-/**
- * Метод для инициализации CORS
- */
 private fun Application.setupCors() {
     install(CORS) {
         allowMethod(HttpMethod.Options)
@@ -99,9 +86,6 @@ private fun Application.setupCors() {
     }
 }
 
-/**
- * Метод для настройки аутентификации
- */
 private fun Application.setupAuthentication() {
     val controller: UserController by inject()
 

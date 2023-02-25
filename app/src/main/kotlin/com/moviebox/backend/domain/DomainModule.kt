@@ -6,8 +6,5 @@ import com.moviebox.backend.domain.services.user.UserServiceImpl
 import org.koin.dsl.module
 
 val domainModule = module {
-    /**
-     * Service
-     */
     single<UserService> { UserServiceImpl(JwtProvider, get()) }
 }

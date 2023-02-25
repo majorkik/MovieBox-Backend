@@ -5,8 +5,5 @@ import com.moviebox.backend.domain.repository.UserRepository
 import org.koin.dsl.module
 
 val dataModule = module {
-    /**
-     * Repository
-     */
     single<UserRepository> { UserRepositoryImpl() }
 }

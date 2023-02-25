@@ -4,14 +4,18 @@ pluginManagement {
         google()
         mavenCentral()
     }
+}
 
-    resolutionStrategy {
-        eachPlugin {
-            when (requested.id.id) {
-                "com.diffplug.spotless" ->
-                    useModule("com.diffplug.spotless:spotless-plugin-gradle:${requested.version}")
-            }
-        }
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://kotlin.bintray.com/ktor")
+        maven("https://kotlin.bintray.com/kotlinx")
+        maven("https://jitpack.io")
     }
 }
 
