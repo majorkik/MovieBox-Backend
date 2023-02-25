@@ -9,6 +9,6 @@ plugins {
 }
 
 allprojects {
-    group = ProjectConfig.group
-    version = ProjectConfig.version
+    group = "com.moviebox.backend"
+    version = "0.0.2"
 }
